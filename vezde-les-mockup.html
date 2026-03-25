@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vezde Les — Домики в лесу</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep: #0C110E;
+  --bg-card: #151C17;
+  --bg-card-hover: #1C2520;
+  --sage: #8B9A7B;
+  --sage-light: #A8B59B;
+  --sage-dark: #6B7A5E;
+  --wood: #C4956A;
+  --wood-light: #D4AD86;
+  --cream: #E8E0D4;
+  --cream-muted: #B8B0A4;
+  --text-primary: #F0EBE3;
+  --text-secondary: #9A9488;
+  --text-dim: #5A564F;
+  --border: rgba(139,154,123,0.15);
+  --border-hover: rgba(139,154,123,0.3);
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Manrope', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1.5rem 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(180deg, rgba(12,17,14,0.95) 0%, rgba(12,17,14,0) 100%);
+  transition: background 0.4s;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+}
+.nav-logo svg { width: 40px; height: 40px; }
+.nav-brand {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.nav-brand span { font-weight: 400; letter-spacing: 0.15em; }
+.nav-links { display: flex; gap: 2.5rem; align-items: center; }
+.nav-links a {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cream-muted);
+  transition: color 0.3s;
+  font-weight: 400;
+}
+.nav-links a:hover { color: var(--sage-light); }
+.nav-cta {
+  padding: 0.6rem 1.8rem !important;
+  border: 1px solid var(--sage);
+  border-radius: 0;
+  color: var(--sage-light) !important;
+  transition: all 0.3s !important;
+}
+.nav-cta:hover {
+  background: var(--sage);
+  color: var(--bg-deep) !important;
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 4rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: url('hero.jpg') center center / cover no-repeat;
+}
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(12,17,14,0.7) 0%, rgba(12,17,14,0.3) 50%, transparent 100%),
+    linear-gradient(180deg, rgba(12,17,14,0.3) 0%, rgba(12,17,14,0.1) 40%, rgba(12,17,14,0.6) 80%, rgba(12,17,14,1) 100%);
+}
+.hero-cta-mobile {
+  display: none;
+  position: fixed;
+  top: 1.2rem;
+  right: 1.5rem;
+  z-index: 101;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--sage);
+  color: var(--sage-light);
+  transition: all 0.3s;
+}
+.hero-content {
+  position: relative; z-index: 1;
+  max-width: 700px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--sage-light);
+}
+.hero-sub {
+  font-size: 1.1rem;
+  color: var(--cream-muted);
+  max-width: 480px;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+}
+.hero-badges {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+}
+.hero-badge {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.03em;
+}
+.hero-badge svg { width: 18px; height: 18px; stroke: var(--sage); fill: none; stroke-width: 1.5; }
+.hero-scroll {
+  position: absolute;
+  bottom: 2rem;
+  right: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.hero-scroll-line {
+  width: 1px; height: 60px;
+  background: linear-gradient(180deg, var(--sage) 0%, transparent 100%);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* SECTIONS */
+section { padding: 6rem 3rem; }
+.section-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+.section-desc {
+  font-size: 1rem;
+  color: var(--cream-muted);
+  max-width: 560px;
+  font-weight: 300;
+}
+
+/* ABOUT */
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.about-visual {
+  aspect-ratio: 3/4;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.about-visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(139,154,123,0.1) 0%, transparent 60%),
+    repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(139,154,123,0.03) 40px, rgba(139,154,123,0.03) 41px);
+}
+.about-visual-label {
+  position: absolute;
+  bottom: 1.5rem; left: 1.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+  padding: 0.4rem 1rem;
+}
+.about-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.stat {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+}
+.stat-number {
+  font-family: var(--font-body);
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--sage-light);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+  letter-spacing: 0.03em;
+}
+
+/* HOUSES */
+.houses { max-width: 1200px; margin: 0 auto; }
+.houses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+}
+.houses-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  max-width: 600px;
+}
+.house-card {
+  border: 1px solid var(--border);
+  transition: all 0.4s;
+  cursor: pointer;
+  overflow: hidden;
+}
+.house-card:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card);
+}
+.house-card:hover .house-image { transform: scale(1.03); }
+.house-image {
+  aspect-ratio: 16/10;
+  background: var(--bg-card);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.6s;
+}
+.house-image::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(139,154,123,0.08) 0%, rgba(196,149,106,0.05) 100%);
+}
+.house-image-label {
+  position: absolute;
+  top: 1rem; left: 1rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sage-light);
+  background: rgba(12,17,14,0.8);
+  backdrop-filter: blur(10px);
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--border);
+}
+.house-info { padding: 1.5rem; }
+.house-name {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+.house-desc {
+  font-size: 0.9rem;
+  color: var(--cream-muted);
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+.house-meta {
+  display: flex;
+  gap: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.house-meta-item {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: flex; align-items: center; gap: 6px;
+}
+.house-meta-item svg { width: 14px; height: 14px; stroke: var(--sage); fill: none; stroke-width: 1.5; }
+.house-price {
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--wood-light);
+}
+.house-price small {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+/* FEATURES */
+.features {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 3rem;
+}
+.feature-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+.feature-row:last-child {
+  margin-bottom: 0;
+}
+.feature-row-reverse {
+  direction: rtl;
+}
+.feature-row-reverse > * {
+  direction: ltr;
+}
+.feature-text h3 {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+.feature-text p {
+  font-size: 1rem;
+  color: var(--cream-muted);
+  line-height: 1.7;
+}
+.feature-text .section-label {
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+}
+.feature-photo {
+  aspect-ratio: 3/2;
+  border: 1px solid var(--border);
+}
+
+/* PHOTO DIVIDER */
+.photo-divider {
+  width: 100%;
+  height: 50vh;
+  min-height: 300px;
+  max-height: 500px;
+}
+
+/* GALLERY */
+.gallery { max-width: 1200px; margin: 0 auto; }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+.gallery-item {
+  aspect-ratio: 1;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: all 0.4s;
+}
+.gallery-item:hover {
+  border-color: var(--border-hover);
+}
+.gallery-item-large {
+  grid-row: span 2;
+  aspect-ratio: auto;
+}
+.gallery-caption {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  color: var(--cream);
+  background: rgba(12,17,14,0.7);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+}
+@media (max-width: 900px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+  .gallery-item-large { grid-row: span 1; aspect-ratio: 4/3; }
+  .gallery-item { aspect-ratio: 4/3; }
+}
+
+/* PRICING */
+.pricing { max-width: 1200px; margin: 0 auto; }
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 3rem;
+}
+.pricing-card {
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+}
+.pricing-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+.pricing-card h3 span {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  margin-left: 0.5rem;
+}
+.pricing-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.5rem 0;
+  font-size: 0.85rem;
+  color: var(--cream-muted);
+}
+.pricing-row .price {
+  color: var(--sage-light);
+  font-weight: 400;
+}
+.pricing-row .price small {
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+.pricing-note {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 0.5rem;
+}
+.pricing-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+.pricing-info-item h4 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  color: var(--sage-light);
+}
+.pricing-info-item p {
+  font-size: 0.85rem;
+  color: var(--cream-muted);
+  line-height: 1.6;
+}
+
+/* CALENDAR */
+.calendar-section { max-width: 1200px; margin: 0 auto; }
+.calendar-wrap {
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  margin: 2rem auto 0;
+  max-width: 500px;
+}
+.calendar-month-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.calendar-month {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+.calendar-nav {
+  display: flex; gap: 0.5rem;
+}
+.calendar-nav button {
+  width: 36px; height: 36px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--cream-muted);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s;
+  font-size: 1.1rem;
+}
+.calendar-nav button:hover { border-color: var(--sage); color: var(--sage-light); }
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.calendar-day-header {
+  text-align: center;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0.5rem 0;
+}
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  color: var(--cream-muted);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.calendar-day:hover {
+  border-color: var(--sage);
+  color: var(--sage-light);
+}
+.calendar-day.empty { cursor: default; }
+.calendar-day.empty:hover { border-color: transparent; }
+.calendar-day.booked {
+  color: var(--text-dim);
+  cursor: not-allowed;
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+.calendar-day.booked:hover { border-color: transparent; color: var(--text-dim); }
+.calendar-day.today {
+  border-color: var(--sage-dark);
+  color: var(--sage-light);
+}
+.calendar-day.selected {
+  background: var(--sage);
+  color: var(--bg-deep);
+  border-color: var(--sage);
+}
+.calendar-day.in-range {
+  background: rgba(139,154,123,0.2);
+  border-color: transparent;
+}
+.calendar-legend {
+  display: flex; gap: 1.5rem; margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.legend-item {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.8rem; color: var(--text-secondary);
+}
+.legend-sample {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-size: 0.7rem;
+  color: var(--cream-muted);
+  border: 1px solid var(--border);
+}
+.legend-sample.booked {
+  color: var(--text-dim);
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+.calendar-note {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+.calendar-note em {
+  color: var(--sage);
+  font-style: normal;
+}
+.calendar-book-btn {
+  width: 100%;
+  margin-top: 1rem;
+}
+.calendar-book-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* CTA */
+.cta-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 8rem 3rem;
+}
+.cta-section .section-title {
+  max-width: 600px;
+  margin: 0 auto 1rem;
+}
+.cta-section .section-desc {
+  max-width: 480px;
+  margin: 0 auto 3rem;
+}
+.cta-buttons {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+}
+.btn-primary {
+  padding: 1rem 3rem;
+  background: var(--sage);
+  color: var(--bg-deep);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-primary:hover { background: var(--sage-light); }
+.btn-outline {
+  padding: 1rem 3rem;
+  background: transparent;
+  color: var(--cream-muted);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-outline:hover { border-color: var(--sage); color: var(--sage-light); }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-left {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+}
+.footer-right {
+  display: flex;
+  gap: 2rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.footer-right a { transition: color 0.3s; }
+.footer-right a:hover { color: var(--sage-light); }
+
+/* MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(12,17,14,0.9);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+.modal-overlay.active {
+  display: flex;
+}
+.modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  max-width: 700px;
+  width: 100%;
+  position: relative;
+}
+.modal h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.modal-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.modal-left label,
+.modal-right label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 0.5rem;
+}
+.modal-right {
+  display: flex;
+  flex-direction: column;
+}
+.modal-right .btn-primary {
+  margin-top: auto;
+}
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s;
+  line-height: 1;
+}
+.modal-close:hover {
+  color: var(--cream);
+}
+.booking-form .form-group {
+  margin-bottom: 1rem;
+}
+.booking-form label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 0.5rem;
+}
+.booking-form input,
+.booking-form select {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color 0.3s;
+}
+.booking-form input:focus,
+.booking-form select:focus {
+  outline: none;
+  border-color: var(--sage);
+}
+.booking-form input::placeholder {
+  color: var(--text-dim);
+}
+.date-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.date-inputs input {
+  flex: 1;
+}
+.date-inputs span {
+  color: var(--text-dim);
+}
+.booking-form .btn-primary {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+.selected-dates {
+  padding: 0.6rem 0.8rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  margin-top: 0.8rem;
+  text-align: center;
+}
+.selected-dates.has-dates {
+  color: var(--sage-light);
+}
+.modal-calendar {
+  border: 1px solid var(--border);
+  padding: 1rem;
+  background: var(--bg-deep);
+}
+.modal-calendar .calendar-grid {
+  gap: 2px;
+}
+.modal-calendar .calendar-day {
+  font-size: 0.75rem;
+}
+.modal-calendar .calendar-day.selected {
+  background: var(--sage);
+  color: var(--bg-deep);
+  border-color: var(--sage);
+}
+.modal-calendar .calendar-day.in-range {
+  background: rgba(139,154,123,0.2);
+  border-color: transparent;
+}
+
+/* FAQ */
+.faq {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 3rem 0;
+}
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 3rem;
+}
+.faq-group {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.faq-group:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.faq-group h4 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  color: var(--sage-light);
+}
+.faq-group p {
+  font-size: 0.9rem;
+  color: var(--cream-muted);
+  line-height: 1.6;
+}
+.faq-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 2rem;
+  align-items: center;
+}
+.faq-list {
+  margin-top: 0;
+}
+.faq-photo {
+  border: 1px solid var(--border);
+  aspect-ratio: 3/4;
+}
+
+/* DIVIDER */
+.divider {
+  max-width: 1200px;
+  margin: 0 auto;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+/* TRIANGLE DECORATION */
+.triangle-deco {
+  position: relative;
+  display: inline-block;
+}
+.triangle-deco::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--sage);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  section { padding: 3rem 1.5rem; }
+  .about { grid-template-columns: 1fr; gap: 2rem; }
+  .about-visual { aspect-ratio: 4/3; }
+  .about-stats { gap: 0.5rem; margin-top: 1.5rem; }
+  .stat { padding: 0.8rem; }
+  .stat-number { font-size: 1.5rem; }
+  .stat-label { font-size: 0.7rem; margin-top: 0.2rem; }
+  .section-title { font-size: 2.25rem; }
+  .section-desc { font-size: 0.9rem; }
+  .houses-grid { grid-template-columns: 1fr; }
+  .features { padding: 2rem 1.5rem; }
+  .feature-row { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+  .feature-row-reverse { direction: ltr; }
+  .feature-text h3 { font-size: 2.25rem; }
+  .feature-text p { font-size: 0.9rem; }
+  .feature-photo { aspect-ratio: 16/9; }
+  .pricing-grid { grid-template-columns: 1fr 1fr; }
+  .pricing-card { padding: 1rem; }
+  .pricing-card h3 { font-size: 1.1rem; }
+  .pricing-row { font-size: 0.8rem; }
+  .pricing-info { grid-template-columns: 1fr; gap: 1.5rem; }
+  .faq { padding: 0 1rem; }
+  .faq-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .faq-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .faq-photo { display: none; }
+  .faq-group { margin-bottom: 0; }
+  .faq-group:nth-child(5) { border-bottom: none; }
+  .hero { padding: 3rem 1.5rem; }
+  .hero-cta-mobile { display: block; }
+  .hero-scroll { display: none; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+  .cta-section { padding: 4rem 1.5rem; }
+  .modal { padding: 1.5rem; max-width: 95%; }
+  .modal h3 { font-size: 1.3rem; margin-bottom: 1rem; }
+  .modal-content { grid-template-columns: 1fr; gap: 1.5rem; }
+  .modal-right .btn-primary { margin-top: 0.5rem; }
+}
+
+/* PHOTO PLACEHOLDER PATTERNS */
+.photo-placeholder {
+  position: relative;
+  overflow: hidden;
+}
+.photo-placeholder::after {
+  content: 'ФОТО';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--text-dim);
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="20,4 36,36 4,36" stroke="#8B9A7B" stroke-width="1" fill="none"/>
+      <polygon points="20,16 28,36 12,36" stroke="#8B9A7B" stroke-width="0.5" fill="none" opacity="0.5"/>
+    </svg>
+    <div class="nav-brand">vezde <span>LES</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="#about">О нас</a>
+    <a href="#amenities">Удобства</a>
+    <a href="#pricing">Цены</a>
+    <a href="#calendar">Календарь</a>
+    <a href="#" class="nav-cta" onclick="openModal(); return false;">Забронировать</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <a href="#" class="hero-cta-mobile" onclick="openModal(); return false;">Забронировать</a>
+  <div class="hero-content">
+    <h1>Отдых в<br><em>тишине леса</em></h1>
+    <p class="hero-sub">A-frame домик посреди хвойного леса. Камин, чан, костёр и ничего лишнего.</p>
+    <div class="hero-badges">
+      <div class="hero-badge">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Круглый год
+      </div>
+      <div class="hero-badge">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/></svg>
+        A-frame
+      </div>
+      <div class="hero-badge">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Клинский район
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    Листай
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="padding-top: 8rem;">
+  <div class="about">
+    <div>
+      <p class="section-label">О месте</p>
+      <h2 class="section-title">Там, где везде только лес</h2>
+      <p class="section-desc" style="margin-bottom: 1.5rem;">
+        Уютный A-frame домик в окружении хвойного леса. Панорамные окна, кухня, ванная и терраса. Здесь нет суеты, только природа, тишина и тёплый свет гирлянд.
+      </p>
+      <p class="section-desc">
+        Винтажный проигрыватель, горячий чан с травами, костёр под соснами. Всё для того, чтобы замедлиться и по-настоящему отдохнуть.
+      </p>
+      <div class="about-stats">
+        <div class="stat">
+          <div class="stat-number">1</div>
+          <div class="stat-label">Уютный домик</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">4</div>
+          <div class="stat-label">гостя в домике</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">55м²</div>
+          <div class="stat-label">Площадь</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">365</div>
+          <div class="stat-label">Дней в году</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual" style="background: url('fire.jpg') center center / cover no-repeat;"></div>
+  </div>
+</section>
+
+
+<!-- FEATURES -->
+<section id="amenities" class="features">
+  <div class="feature-row">
+    <div class="feature-text">
+      <p class="section-label">Интерьер</p>
+      <h3>Два уровня</h3>
+      <p>Винтовая лестница ведёт на второй этаж. Внизу кухня и гостиная, наверху уютная спальня под треугольным окном.</p>
+    </div>
+    <div class="feature-photo" style="background: url('stairs.jpg') center 25% / cover no-repeat;"></div>
+  </div>
+
+  <div class="feature-row feature-row-reverse">
+    <div class="feature-text">
+      <p class="section-label">Второй этаж</p>
+      <h3>Спальня под крышей</h3>
+      <p>Треугольное окно с видом на верхушки деревьев. Винтовая лестница, тёплое дерево, мягкий свет.</p>
+    </div>
+    <div class="feature-photo" style="background: url('bedroom.jpg') center center / cover no-repeat;"></div>
+  </div>
+
+  <div class="feature-row">
+    <div class="feature-text">
+      <p class="section-label">Готовить</p>
+      <h3>Полноценная кухня</h3>
+      <p>Плита, духовка, холодильник, кофемашина. Вся посуда, как дома, только лучше.</p>
+    </div>
+    <div class="feature-photo" style="background: url('kitchen3.jpg') center center / cover no-repeat;"></div>
+  </div>
+
+  <div class="feature-row feature-row-reverse">
+    <div class="feature-text">
+      <p class="section-label">Расслабиться</p>
+      <h3>Банный чан</h3>
+      <p>Горячая вода, травы, цитрусы прямо в лесу. Топим на дровах, готовим ритуал для вас.</p>
+    </div>
+    <div class="feature-photo" style="background: url('chan.jpg') center center / cover no-repeat;"></div>
+  </div>
+
+  <div class="feature-row">
+    <div class="feature-text">
+      <p class="section-label">Атмосфера</p>
+      <h3>Детали</h3>
+      <p>Виниловый проигрыватель, книги, настольные игры. Связь ловит, но хочется убрать телефон подальше.</p>
+    </div>
+    <div class="feature-photo" style="background: url('vinyl.jpg') center center / cover no-repeat;"></div>
+  </div>
+</section>
+
+
+<!-- CALENDAR -->
+<section id="calendar">
+  <div class="calendar-section">
+    <p class="section-label">Свободные даты</p>
+    <h2 class="section-title">Календарь бронирования</h2>
+    <p class="section-desc">Актуальные даты обновляются автоматически. Выберите свободные дни и оставьте заявку.</p>
+    <div class="calendar-wrap">
+      <div class="calendar-month-header">
+        <div class="calendar-month">Апрель 2026</div>
+        <div class="calendar-nav">
+          <button>&larr;</button>
+          <button>&rarr;</button>
+        </div>
+      </div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+      <div class="calendar-legend">
+        <div class="legend-item"><span class="legend-sample">12</span> свободно</div>
+        <div class="legend-item"><span class="legend-sample booked">12</span> занято</div>
+      </div>
+      <div class="selected-dates" id="mainSelectedDates">Выберите даты</div>
+      <button class="btn-primary calendar-book-btn" id="mainBookBtn" onclick="openModalWithDates()" disabled>Забронировать</button>
+          </div>
+  </div>
+</section>
+
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="pricing">
+    <p class="section-label">Стоимость</p>
+    <h2 class="section-title">Цены и условия</h2>
+
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Будни <span>пн — чт</span></h3>
+        <div class="pricing-row">
+          <span>1 ночь</span>
+          <span class="price">13 000 ₽</span>
+        </div>
+        <div class="pricing-row">
+          <span>от 2 ночей</span>
+          <span class="price">9 000 ₽ <small>/ ночь</small></span>
+        </div>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Выходные <span>пт — вс</span></h3>
+        <div class="pricing-row">
+          <span>от 2 ночей</span>
+          <span class="price">13 000 ₽ <small>/ ночь</small></span>
+        </div>
+        <p class="pricing-note">Минимум 2 ночи</p>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Банный чан</h3>
+        <div class="pricing-row">
+          <span>Без добавок</span>
+          <span class="price">6 000 ₽</span>
+        </div>
+        <div class="pricing-row">
+          <span>Цитрусы или хвоя</span>
+          <span class="price">2 000 ₽</span>
+        </div>
+        <div class="pricing-row">
+          <span>Цитрусы и хвоя</span>
+          <span class="price">3 000 ₽</span>
+        </div>
+        <div class="pricing-row">
+          <span>Дубовый веник</span>
+          <span class="price">750 ₽ <small>/ шт</small></span>
+        </div>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Дополнительно</h3>
+        <div class="pricing-row">
+          <span>Доп. гость</span>
+          <span class="price">1 500 ₽ <small>/ ночь</small></span>
+        </div>
+        <div class="pricing-row">
+          <span>Питомец</span>
+          <span class="price">+ 1 500 ₽</span>
+        </div>
+        <div class="pricing-row">
+          <span>Дети до 5 лет</span>
+          <span class="price">бесплатно</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pricing-info">
+      <div class="pricing-info-item">
+        <h4>Бронирование</h4>
+        <p>Заезд с 15:00, выезд до 12:00. Бронь подтверждается после внесения 50% предоплаты.</p>
+      </div>
+      <div class="pricing-info-item">
+        <h4>Отмена</h4>
+        <p>За 14 дней полный возврат. За 7 дней перенос дат. Менее 7 дней без возврата.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="faq">
+    <p class="section-label">Удобства</p>
+    <h2 class="section-title">Что есть в доме</h2>
+
+    <div class="faq-layout">
+    <div class="faq-list">
+        <div class="faq-group">
+          <h4>Кухня</h4>
+          <p>Холодильник, СВЧ, посудомойка, кофеварка, тостер, вафельница. Посуда на 4 персоны. Чай, кофе, соль, сахар, масло.</p>
+        </div>
+        <div class="faq-group">
+          <h4>Постель и гигиена</h4>
+          <p>2 комплекта белья, полотенца, гель для душа, шампунь, фен, аптечка.</p>
+        </div>
+        <div class="faq-group">
+          <h4>Досуг</h4>
+          <p>Настольные игры, проектор, виниловый проигрыватель.</p>
+        </div>
+        <div class="faq-group">
+          <h4>Для прогулок</h4>
+          <p>Пледы, кемпинговые фонари, зонты, дождевики, резиновые сапоги.</p>
+        </div>
+        <div class="faq-group">
+          <h4>Мангал и костёр</h4>
+          <p>Набор для барбекю, ёмкость для маринования, связка дров, подушки для уличной мебели.</p>
+        </div>
+        <div class="faq-group">
+          <h4>Банный чан</h4>
+          <p>Шапки для бани. Тапочки и халаты не предоставляются.</p>
+        </div>
+    </div>
+    <div class="faq-photo" style="background: url('window.jpg') center top / cover no-repeat;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <h3>Забронировать</h3>
+
+    <form class="booking-form" onsubmit="submitBooking(event)">
+      <div class="modal-content">
+        <div class="modal-left">
+          <label>Выберите даты</label>
+          <div class="modal-calendar">
+            <div class="calendar-month-header">
+              <div class="calendar-month" id="modalCalendarMonth">Апрель 2026</div>
+              <div class="calendar-nav">
+                <button type="button" onclick="changeModalMonth(-1)">&larr;</button>
+                <button type="button" onclick="changeModalMonth(1)">&rarr;</button>
+              </div>
+            </div>
+            <div class="calendar-grid" id="modalCalendarGrid"></div>
+          </div>
+          <div class="selected-dates" id="selectedDates">Выберите даты</div>
+        </div>
+
+        <div class="modal-right">
+          <div class="form-group">
+            <label>Гостей</label>
+            <select id="guests" required>
+              <option value="1">1 гость</option>
+              <option value="2" selected>2 гостя</option>
+              <option value="3">3 гостя</option>
+              <option value="4">4 гостя</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Имя</label>
+            <input type="text" id="name" required placeholder="Как вас зовут?">
+          </div>
+
+          <div class="form-group">
+            <label>Телефон</label>
+            <input type="tel" id="phone" required placeholder="+7 (999) 999-99-99">
+          </div>
+
+          <button type="submit" class="btn-primary">Отправить заявку</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">VEZDE LES</div>
+  <div class="footer-right">
+    <a href="#">WhatsApp</a>
+    <a href="#">Telegram</a>
+    <a href="#">Instagram</a>
+    <a href="#">Как добраться</a>
+  </div>
+</footer>
+
+<script>
+// Calendar shared data
+const days = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+const booked = [3,4,5,10,11,12,17,18,24,25];
+
+// Main calendar state
+let mainCheckIn = null;
+let mainCheckOut = null;
+let mainMonth = 3; // April
+let mainYear = 2026;
+
+function renderMainCalendar() {
+  const grid = document.getElementById('calendarGrid');
+  grid.innerHTML = '';
+
+  days.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'calendar-day-header';
+    el.textContent = d;
+    grid.appendChild(el);
+  });
+
+  const firstDay = new Date(mainYear, mainMonth, 1).getDay();
+  const startOffset = firstDay === 0 ? 6 : firstDay - 1;
+  const daysInMonth = new Date(mainYear, mainMonth + 1, 0).getDate();
+
+  for (let i = 0; i < startOffset; i++) {
+    const el = document.createElement('div');
+    el.className = 'calendar-day empty';
+    grid.appendChild(el);
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const el = document.createElement('div');
+    el.className = 'calendar-day';
+    el.textContent = d;
+
+    const dateStr = `${mainYear}-${String(mainMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const dateObj = new Date(mainYear, mainMonth, d);
+
+    if (booked.includes(d) && mainMonth === 3 && mainYear === 2026) {
+      el.classList.add('booked');
+    } else {
+      el.onclick = () => selectMainDate(dateObj);
+
+      if (mainCheckIn && formatDate(mainCheckIn) === dateStr) {
+        el.classList.add('selected');
+      }
+      if (mainCheckOut && formatDate(mainCheckOut) === dateStr) {
+        el.classList.add('selected');
+      }
+      if (mainCheckIn && mainCheckOut && dateObj > mainCheckIn && dateObj < mainCheckOut) {
+        el.classList.add('in-range');
+      }
+    }
+
+    grid.appendChild(el);
+  }
+}
+
+function selectMainDate(dateObj) {
+  if (!mainCheckIn || (mainCheckIn && mainCheckOut)) {
+    mainCheckIn = dateObj;
+    mainCheckOut = null;
+  } else if (dateObj > mainCheckIn) {
+    mainCheckOut = dateObj;
+  } else {
+    mainCheckIn = dateObj;
+    mainCheckOut = null;
+  }
+
+  updateMainSelectedDates();
+  renderMainCalendar();
+}
+
+function updateMainSelectedDates() {
+  const display = document.getElementById('mainSelectedDates');
+  const btn = document.getElementById('mainBookBtn');
+
+  if (mainCheckIn && mainCheckOut) {
+    display.textContent = `${formatDisplayDate(mainCheckIn)} — ${formatDisplayDate(mainCheckOut)}`;
+    display.classList.add('has-dates');
+    btn.disabled = false;
+  } else if (mainCheckIn) {
+    display.textContent = `Заезд: ${formatDisplayDate(mainCheckIn)} → выберите выезд`;
+    display.classList.add('has-dates');
+    btn.disabled = true;
+  } else {
+    display.textContent = 'Выберите даты';
+    display.classList.remove('has-dates');
+    btn.disabled = true;
+  }
+}
+
+function openModalWithDates() {
+  checkInDate = mainCheckIn;
+  checkOutDate = mainCheckOut;
+  modalMonth = mainCheckIn.getMonth();
+  modalYear = mainCheckIn.getFullYear();
+  updateSelectedDatesDisplay();
+  openModal();
+}
+
+// Initialize main calendar
+renderMainCalendar();
+
+// Modal calendar state
+let modalMonth = 3; // April (0-indexed)
+let modalYear = 2026;
+let checkInDate = null;
+let checkOutDate = null;
+const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
+// Booked dates (format: 'YYYY-MM-DD')
+const bookedDates = [
+  '2026-04-03', '2026-04-04', '2026-04-05',
+  '2026-04-10', '2026-04-11', '2026-04-12',
+  '2026-04-17', '2026-04-18',
+  '2026-04-24', '2026-04-25'
+];
+
+function renderModalCalendar() {
+  const grid = document.getElementById('modalCalendarGrid');
+  const monthLabel = document.getElementById('modalCalendarMonth');
+  grid.innerHTML = '';
+  monthLabel.textContent = monthNames[modalMonth] + ' ' + modalYear;
+
+  // Day headers
+  days.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'calendar-day-header';
+    el.textContent = d;
+    grid.appendChild(el);
+  });
+
+  // First day of month (0 = Sunday)
+  const firstDay = new Date(modalYear, modalMonth, 1).getDay();
+  const startOffset = firstDay === 0 ? 6 : firstDay - 1; // Convert to Monday start
+
+  // Days in month
+  const daysInMonth = new Date(modalYear, modalMonth + 1, 0).getDate();
+
+  // Empty cells
+  for (let i = 0; i < startOffset; i++) {
+    const el = document.createElement('div');
+    el.className = 'calendar-day empty';
+    grid.appendChild(el);
+  }
+
+  // Day cells
+  for (let d = 1; d <= daysInMonth; d++) {
+    const el = document.createElement('div');
+    el.className = 'calendar-day';
+    el.textContent = d;
+
+    const dateStr = `${modalYear}-${String(modalMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const dateObj = new Date(modalYear, modalMonth, d);
+
+    if (bookedDates.includes(dateStr)) {
+      el.classList.add('booked');
+    } else {
+      el.onclick = () => selectDate(dateObj, dateStr);
+
+      // Highlight selected dates
+      if (checkInDate && dateStr === formatDate(checkInDate)) {
+        el.classList.add('selected');
+      }
+      if (checkOutDate && dateStr === formatDate(checkOutDate)) {
+        el.classList.add('selected');
+      }
+      // Highlight range
+      if (checkInDate && checkOutDate && dateObj > checkInDate && dateObj < checkOutDate) {
+        el.classList.add('in-range');
+      }
+    }
+
+    grid.appendChild(el);
+  }
+}
+
+function formatDate(date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
+function formatDisplayDate(date) {
+  return `${date.getDate()} ${monthNames[date.getMonth()].toLowerCase().slice(0, 3)}`;
+}
+
+function selectDate(dateObj, dateStr) {
+  if (!checkInDate || (checkInDate && checkOutDate)) {
+    // Start new selection
+    checkInDate = dateObj;
+    checkOutDate = null;
+  } else if (dateObj > checkInDate) {
+    // Set checkout
+    checkOutDate = dateObj;
+  } else {
+    // Reset if selected before checkin
+    checkInDate = dateObj;
+    checkOutDate = null;
+  }
+
+  updateSelectedDatesDisplay();
+  renderModalCalendar();
+}
+
+function updateSelectedDatesDisplay() {
+  const display = document.getElementById('selectedDates');
+  if (checkInDate && checkOutDate) {
+    display.textContent = `${formatDisplayDate(checkInDate)} — ${formatDisplayDate(checkOutDate)}`;
+    display.classList.add('has-dates');
+  } else if (checkInDate) {
+    display.textContent = `Заезд: ${formatDisplayDate(checkInDate)} → выберите выезд`;
+    display.classList.add('has-dates');
+  } else {
+    display.textContent = 'Выберите даты заезда и выезда';
+    display.classList.remove('has-dates');
+  }
+}
+
+function changeModalMonth(delta) {
+  modalMonth += delta;
+  if (modalMonth > 11) {
+    modalMonth = 0;
+    modalYear++;
+  } else if (modalMonth < 0) {
+    modalMonth = 11;
+    modalYear--;
+  }
+  renderModalCalendar();
+}
+
+// Modal functions
+function openModal() {
+  document.getElementById('bookingModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  renderModalCalendar();
+}
+
+function closeModal() {
+  document.getElementById('bookingModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Telegram config - заполни свои данные
+const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN'; // получить у @BotFather
+const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID'; // ID чата или группы
+
+async function submitBooking(e) {
+  e.preventDefault();
+
+  if (!checkInDate || !checkOutDate) {
+    alert('Пожалуйста, выберите даты заезда и выезда');
+    return;
+  }
+
+  const guests = document.getElementById('guests').value;
+  const name = document.getElementById('name').value;
+  const phone = document.getElementById('phone').value;
+
+  const message = `🏡 Новая заявка на бронирование
+
+📅 Даты: ${formatDisplayDate(checkInDate)} — ${formatDisplayDate(checkOutDate)}
+👥 Гостей: ${guests}
+👤 Имя: ${name}
+📞 Телефон: ${phone}`;
+
+  // Отправка в Telegram
+  if (TELEGRAM_BOT_TOKEN !== 'YOUR_BOT_TOKEN') {
+    try {
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: message
+        })
+      });
+    } catch (err) {
+      console.error('Telegram error:', err);
+    }
+  }
+
+  alert('Спасибо! Мы свяжемся с вами в ближайшее время.');
+  closeModal();
+
+  // Reset selection
+  checkInDate = null;
+  checkOutDate = null;
+  updateSelectedDatesDisplay();
+}
+
+// Close modal on overlay click
+document.getElementById('bookingModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+
+</body>
+</html>
